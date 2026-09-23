@@ -1470,6 +1470,11 @@ func void _PM_Unarchive() {
     if(!STR_Compare("HNDL:", STR_Prefix(str, 5))) {
          var int i; i = STR_ToInt(STR_SubStr(str, 5, STR_Len(str)-5));
 
+        // Keep new handles above those restored from the separate PermMem save.
+        if (i > nextHandle) {
+            nextHandle = i;
+        };
+
         PM_CurrHandle = i;
 
         _PM_ReadSaveStruct();
