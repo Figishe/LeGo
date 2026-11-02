@@ -2,6 +2,9 @@
                 SAVES
 \***********************************/
 
+// Process-local: distinguish save loading from the second Gothic 1 new-game init.
+const int _LeGo_LoadingSave = 0;
+
 var int _LeGo_LevelChangeIsExecuted;
 var int _LeGo_LevelChangeCounter;
 
@@ -74,6 +77,7 @@ func int _BR_GetSelectedSlot() {
 // [intern] Fix slot on quick load (F9)
 //========================================
 func void _BR_SetSelectedSlot() {
+    _LeGo_LoadingSave = 1;
     var int slot; slot = MEM_ReadInt(ESP+4);
     var CGameManager man; man = _^(MEM_ReadInt(MEMINT_gameMan_Pointer_address));
     MEM_WriteInt(man.menu_load_savegame + menu_savegame_slot_offset, slot);
